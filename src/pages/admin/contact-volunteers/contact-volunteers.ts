@@ -5,6 +5,7 @@ import { VolunteerEventsService } from '../../../lib/service/volunteer-events-se
 import { ModalController } from 'ionic-angular';
 import { Message } from './message';
 import { OrganizationServices } from '../../../lib/service/organization';
+import {MessageTargetList } from '../../../lib/components/message-target-list/message-target-list';
 
 @Component({
   templateUrl: 'contact-volunteers.html'
@@ -31,35 +32,34 @@ export class ContactVolunteers {
   public groups: Array<any> = [];
 
   ngOnInit() {
-    console.log("websitecheck:contact-volunteers init");
-    this.sendTo = 'individual';
-    this.userServices.getAllUsers().subscribe(
-      users => {
-        for (var user of users) {
-          if (user.contactmethod != null && user.first_name != '' && user.first_name != null)
-            this.users.push(user);
-        }
-      },
-      err => this.getUsersError = true,
-      () => this.toggleSelectAllUsers(true)
-    );
-    this.volunteerEventsService.getVolunteerEvents().subscribe(
-      events => {
-        this.events = events;
-      },
-      err => this.getEventsError = true,
-      () => this.toggleSelectAllEvents(true)
-    );
-    this.organizationService.getAllOrgNames().subscribe(
-      groups => {
-        console.log("Groups: " + JSON.stringify(groups));
-        for (let g of groups) {
-          if (g.status == 0)
-            this.groups.push(g);
-        }
-      },
-      err => {this.getGroupsError = true;}
-    );
+     this.sendTo = 'individual';
+    // this.userServices.getAllUsers().subscribe(
+    //   users => {
+    //     for (var user of users) {
+    //       if (user.contactmethod != null && user.first_name != '' && user.first_name != null)
+    //         this.users.push(user);
+    //     }
+    //   },
+    //   err => this.getUsersError = true,
+    //   () => this.toggleSelectAllUsers(true)
+    // );
+    // this.volunteerEventsService.getVolunteerEvents().subscribe(
+    //   events => {
+    //     this.events = events;
+    //   },
+    //   err => this.getEventsError = true,
+    //   () => this.toggleSelectAllEvents(true)
+    // );
+    // this.organizationService.getAllOrgNames().subscribe(
+    //   groups => {
+    //     console.log("Groups: " + JSON.stringify(groups));
+    //     for (let g of groups) {
+    //       if (g.status == 0)
+    //         this.groups.push(g);
+    //     }
+    //   },
+    //   err => {this.getGroupsError = true;}
+    // );
   }
 
   back() {

@@ -8,84 +8,20 @@
 
         <ion-list radio-group [(ngModel)]="sendTo">
             <ion-item>
-                <ion-radio name="sendTo" [id]="radio-individual" value="individual" ngDefaultControl></ion-radio>
-                <ion-label [attr.for]="radio-individaul">Select Individual Volunteers</ion-label>
+                <ion-label [attr.for]="radio-individual">Select Individual Volunteers</ion-label>
+                <ion-radio checked [id]="radio-individual" value="individual" ngDefaultControl></ion-radio>
             </ion-item>
             <ion-item>
-                <ion-radio name="sendTo" [id]="radio-events" value="events" ngDefaultControl></ion-radio>
                 <ion-label [attr.for]="radio-events">Select Event</ion-label>
+                <ion-radio [id]="radio-events" value="events" ngDefaultControl></ion-radio>
             </ion-item>
             <ion-item>
-                <ion-radio name="sendTo" [id]="radio-groups" value="groups" ngDefaultControl></ion-radio>
                 <ion-label [attr.for]="radio-events">Select Group</ion-label>
+                <ion-radio [id]="radio-groups" value="groups" ngDefaultControl></ion-radio>
             </ion-item>
         </ion-list>
-
-
-        <ion-grid *ngIf="sendTo==='individual'">
-            <ion-row style="font-weight:bold">
-                <ion-col col-1>
-                    <ion-checkbox [(ngModel)]="selectAllUsers" (click)="toggleSelectAllUsers(false);"></ion-checkbox>
-                </ion-col>
-                <ion-col col-2>First Name</ion-col>
-                <ion-col col-2>Last Name</ion-col>
-                <ion-col col-2>Contact Method</ion-col>
-                <ion-col col-2>Email/Mobile Number</ion-col>
-            </ion-row>
-            <div *ngFor="let user of users">
-                <ion-row>
-                    <ion-col col-1>
-                        <ion-checkbox name="{{user.id}}checkbox" [(ngModel)]="user.selected"></ion-checkbox>
-                    </ion-col>
-                    <ion-col col-2>{{user.first_name}}</ion-col>
-                    <ion-col col-2>{{user.last_name}}</ion-col>
-                    <ion-col col-2>{{user.contactmethod_name}}</ion-col>
-                    <ion-col col-2 *ngIf="user.contactmethod_name==='Phone'">({{user.mobilenumber[1]}}{{user.mobilenumber[2]}}{{user.mobilenumber[3]}}) {{user.mobilenumber[4]}}{{user.mobilenumber[5]}}{{user.mobilenumber[6]}}-{{user.mobilenumber[7]}}{{user.mobilenumber[8]}}{{user.mobilenumber[9]}}{{user.mobilenumber[10]}}</ion-col>
-                    <ion-col col-2 *ngIf="user.contactmethod_name==='Email'">{{user.email}}</ion-col>
-                </ion-row>
-            </div>
-        </ion-grid>
-
-        <ion-grid *ngIf="sendTo==='events' && events">
-            <ion-row style="font-weight:bold">
-                <ion-col col-1>
-                    <ion-checkbox [(ngModel)]="selectAllEvents" (click)="toggleSelectAllEvents(false);"></ion-checkbox>
-                </ion-col>
-                <ion-col col-2>Event Name</ion-col>
-                <ion-col col-2>Event Date</ion-col>
-                <ion-col col-2>Event Location</ion-col>
-            </ion-row>
-            <div *ngFor="let event of events">
-                <ion-row>
-                    <ion-col col-1>
-                        <ion-checkbox name="{{event.title}}checkbox" [(ngModel)]="event.selected"></ion-checkbox>
-                    </ion-col>
-                    <ion-col col-2>{{event.title}}</ion-col>
-                    <ion-col col-2>{{event.start | parseTime:"MMMM DD, h:mm a"}}</ion-col>
-                    <ion-col col-2>{{event.location_name}}</ion-col>
-                </ion-row>
-            </div>
-        </ion-grid>
-        <ion-grid *ngIf="sendTo === 'group'">
-            <ion-row style="font-weight:bold">
-                <ion-col col-1>
-                    <ion-checkbox [(ngModel)]="selectAllGroups" (click)="toggleSelectAllUsers(false);"></ion-checkbox>
-                </ion-col>
-                <ion-col col-3>Org Name</ion-col>
-                <ion-col col-3>Org Type</ion-col>
-                <ion-col col-3>Group Name</ion-col>
-            </ion-row>
-                <ion-row *ngFor="let group of groups">
-                    <ion-col col-1>
-                        <ion-checkbox name="group-checkbox"></ion-checkbox>
-                    </ion-col>
-                    <ion-col col-3>{{group.name}}</ion-col>
-                    <ion-col col-3>{{group.org_type}}</ion-col>
-                    <ion-col col-3>{{group.group}}</ion-col>
-                </ion-row>
-        </ion-grid>
-
-
+        <message-target-list [listType]="sendTo">
+        </message-target-list>
 
         <ion-grid>
             <ion-row>
