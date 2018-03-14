@@ -27,7 +27,7 @@ export class Message {
 
 	goHome() {
 		this.viewCtrl.dismiss({'cancel':true});
-		this.app.getRootNav().push(HomePage);
+		//this.app.getRootNav().push(HomePage);
 	}
 
 	send() {
