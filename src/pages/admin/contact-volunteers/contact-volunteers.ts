@@ -91,17 +91,18 @@ export class ContactVolunteers implements AfterViewInit {
   }
 
 public canSendMessage(): boolean {
-    console.log("In canSendMessage()");
     return this.messageTargetList && this.messageTargetList.areSomeChecked();
 }
 
 
 openMessageModal() {
-    
+      let myList = this.messageTargetList.listingsArray.controls.map( control => control.value).filter(item => item.sendto == true);
+      console.log("openmessagemodal listItems: " + JSON.stringify(myList));
+      ;
       let modal = this.modalCtrl.create(Message,
         {
           listType: this.sendTo,
-          listing: this.messageTargetList.listItems
+          list: myList
         });
       modal.present();
       modal.onDidDismiss(
