@@ -21,6 +21,7 @@ import { DonatePage } from '../pages/donate/donate';
 import { ForgotPage } from '../pages/forgot/forgot';
 import { LoginPage } from '../pages/login/login';
 import { AboutPage } from '../pages/about/about';
+import { AppInfoPage } from '../pages/app-info/app-info';
 import { ContactPage } from '../pages/contact/contact';
 import { EventPage } from '../pages/events/events';
 import { MyEventsPage } from '../pages/myevents/myevents';
@@ -71,8 +72,13 @@ import { EditGroupAttendancePage } from '../pages/edit-group-attendance/edit-gro
 import { GroupAttendeeModal } from '../modals/group-attendee-modal';
 import { MemberPopOver } from '../pages/group-profile/member-popover';
 import { AppVersion } from '@ionic-native/app-version';
+<<<<<<< HEAD
 import { OrganizationServices } from '../lib/service/organization';
 import { MessageTargetList } from '../lib/components/message-target-list/message-target-list';
+=======
+import { AppPreferences } from '@ionic-native/app-preferences';
+
+>>>>>>> origin/master
 
 export const deepLinkConfig: DeepLinkConfig = {
   links: [
@@ -96,6 +102,7 @@ export function translateFactory(http: HttpClient) {
     ForgotPage,
     LoginPage,
     AboutPage,
+    AppInfoPage,
     ContactPage,
     CreateGroupPage,
     GroupProfilePage,
@@ -181,6 +188,7 @@ export function translateFactory(http: HttpClient) {
     ForgotPage,
     LoginPage,
     AboutPage,
+    AppInfoPage,
     ContactPage,
     RegisterLoginPage,
     RegisterIndividualProfilePage,
