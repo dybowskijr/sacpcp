@@ -29,35 +29,58 @@ export class Message {
 		this.viewCtrl.dismiss({'cancel':true});
 	}
 
-	send() {
-		let apiCall = null;
+	send() {   //TODO: figure out the proper way to handle 'this' so that the 
+			   // three different API calls can be put into a variable
+			   // for a cleaner implementation
 		let payload = {
 			'message': this.message,
 			'schedule_option': 2
 		}
+
 		switch(this.listType) {
 			case 'individual':
 				payload['recipients'] = this.list;
-				apiCall = this.messageServices.sendMessageToUsersList;
+				this.messageServices.sendMessageToUsersList(payload).subscribe(
+					response => {
+						console.log(response);
+						this.viewCtrl.dismiss({
+							'success': response, 
+							'message': 'Sent message to selected volunteer(s).'
+						});
+					},
+					error => {this.sendMessageError = true }
+				);
 				break;
 			case 'groups':
-				// TODO
-				break;
+			for(let group of this.list) {
+				payload['event_id'] = event['id'];
+				this.messageServices.sendMessageToEvent(event['id'], payload).subscribe(
+					response => {
+						console.log(response);
+						this.viewCtrl.dismiss({
+							'success': response, 
+							'message': 'Sent message the volunteer(s) for each event.'
+						});
+					},
+					error => {this.sendMessageError = true }
+				);
+				}				break;
 			case 'events':
 			default:
-			    //apiCall = this.messageServices.
+			    for(let event of this.list) {
+				    payload['event_id'] = event['id'];
+					this.messageServices.sendMessageToEvent(event['id'], payload).subscribe(
+						response => {
+							console.log(response);
+							this.viewCtrl.dismiss({
+								'success': response, 
+								'message': 'Sent message the volunteer(s) for each event.'
+							});
+						},
+						error => {this.sendMessageError = true }
+					);
+					}
 				break;
 		}
-		console.log("payload: " + JSON.stringify(payload));
-		apiCall(payload).subscribe(
-			response => {
-				console.log(response);
-				this.viewCtrl.dismiss({
-					'success': response, 
-					'message': 'Sent message to selected volunteer(s).'
-				});
-			},
-			error => {this.sendMessageError = true }
-		);
 	}
 }
