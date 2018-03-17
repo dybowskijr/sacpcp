@@ -72,13 +72,10 @@ import { EditGroupAttendancePage } from '../pages/edit-group-attendance/edit-gro
 import { GroupAttendeeModal } from '../modals/group-attendee-modal';
 import { MemberPopOver } from '../pages/group-profile/member-popover';
 import { AppVersion } from '@ionic-native/app-version';
-<<<<<<< HEAD
 import { OrganizationServices } from '../lib/service/organization';
 import { MessageTargetList } from '../lib/components/message-target-list/message-target-list';
-=======
 import { AppPreferences } from '@ionic-native/app-preferences';
 
->>>>>>> origin/master
 
 export const deepLinkConfig: DeepLinkConfig = {
   links: [

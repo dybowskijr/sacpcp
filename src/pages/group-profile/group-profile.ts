@@ -56,31 +56,27 @@ constructor(public navCtrl: NavController, public navParams: NavParams,
          
         
   }
-  public addNew()
-    {
-      
-      
+    public addNew() {
 
-   let userPop = this.modalControl.create(MemberPopOver, {cssClass:"member-modal"});
-   userPop.present();
- 
-       if (!this.canEdit)
-       return;
-       
-        if (this.newMember )
-        {
-            if (this.newMember.visible)
-            {
-                return ;
+        let userPop = this.modalControl.create(MemberPopOver, { cssClass: "member-modal" });
+        userPop.present();
+
+        if (!this.canEdit)
+            return;
+
+        if (this.newMember) {
+            if (this.newMember.visible) {
+                return;
             }
             else
-             this.newMember.visible=true;
-         }
-        else
-        {
-            this.newMember={visible:true,status:0,first_name:"", emailOrNumber:null,contact_method:null,last_name:null, email:null, mobilenumber: null };
-            
-       }
+                this.newMember.visible = true;
+        }
+        else {
+            this.newMember = { 
+                visible: true, status: 0, first_name: "", emailOrNumber: null, 
+                contact_method: null, last_name: null, email: null, mobilenumber: null 
+            };
+        }
     }
     
     
