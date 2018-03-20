@@ -53,8 +53,8 @@ export class Message {
 				break;
 			case 'groups':
 			for(let group of this.list) {
-				payload['event_id'] = event['id'];
-				this.messageServices.sendMessageToEvent(event['id'], payload).subscribe(
+				payload['event_id'] = group['id'];
+				this.messageServices.sendMessageToGroup(group['id'], payload).subscribe(
 					response => {
 						console.log(response);
 						this.viewCtrl.dismiss({
@@ -68,7 +68,8 @@ export class Message {
 			case 'events':
 			default:
 			    for(let event of this.list) {
-				    payload['event_id'] = event['id'];
+					payload['event_id'] = event['id'];
+					console.log('payload:' + payload);
 					this.messageServices.sendMessageToEvent(event['id'], payload).subscribe(
 						response => {
 							console.log(response);

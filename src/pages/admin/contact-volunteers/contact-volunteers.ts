@@ -2,7 +2,7 @@ import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
 import { UserServices } from '../../../lib/service/user';
 import { VolunteerEventsService } from '../../../lib/service/volunteer-events-service';
-import { ModalController } from 'ionic-angular';
+import { ModalController, Content } from 'ionic-angular';
 import { Message } from './message';
 import { OrganizationServices } from '../../../lib/service/organization';
 import {MessageTargetList } from '../../../lib/components/message-target-list/message-target-list';
@@ -22,6 +22,7 @@ export class ContactVolunteers implements AfterViewInit {
   }
 
   @ViewChild(MessageTargetList) messageTargetList: MessageTargetList;
+  @ViewChild(Content) content: Content;
 
   public sendTo: string;
   public users: Array<any> = [];
@@ -35,37 +36,14 @@ export class ContactVolunteers implements AfterViewInit {
 
   ngOnInit() {
      this.sendTo = 'individual';
-    // this.userServices.getAllUsers().subscribe(
-    //   users => {
-    //     for (var user of users) {
-    //       if (user.contactmethod != null && user.first_name != '' && user.first_name != null)
-    //         this.users.push(user);
-    //     }
-    //   },
-    //   err => this.getUsersError = true,
-    //   () => this.toggleSelectAllUsers(true)
-    // );
-    // this.volunteerEventsService.getVolunteerEvents().subscribe(
-    //   events => {
-    //     this.events = events;
-    //   },
-    //   err => this.getEventsError = true,
-    //   () => this.toggleSelectAllEvents(true)
-    // );
-    // this.organizationService.getAllOrgNames().subscribe(
-    //   groups => {
-    //     console.log("Groups: " + JSON.stringify(groups));
-    //     for (let g of groups) {
-    //       if (g.status == 0)
-    //         this.groups.push(g);
-    //     }
-    //   },
-    //   err => {this.getGroupsError = true;}
-    // );
   }
 
   back() {
     this.nav.pop();
+  }
+
+  scrollToTop () {
+    this.content.scrollToTop();
   }
 
   presentToast(message) {
@@ -77,15 +55,6 @@ export class ContactVolunteers implements AfterViewInit {
     toast.present();                                                    
   }
 
-
-  checkSelected() {
-    if (this.sendTo === 'individual') {
-      return !this.users.some(user => user.selected);
-    } else {
-      return !this.events.some(event => event.selected);
-    }
-  }
-
   ngAfterViewInit(): void {
     //throw new Error("Method not implemented.");
   }
@@ -93,7 +62,6 @@ export class ContactVolunteers implements AfterViewInit {
 public canSendMessage(): boolean {
     return this.messageTargetList && this.messageTargetList.areSomeChecked();
 }
-
 
 openMessageModal() {
       let myList = this.messageTargetList.listingsArray.controls.map( control => control.value).filter(item => item.sendto == true);
@@ -106,7 +74,13 @@ openMessageModal() {
         });
       modal.present();
       modal.onDidDismiss(
-        res => { if (!res.cancel) this.presentToast('Sent message to selected volunteer(s).') }
+        res => { if (!res.cancel) {
+                     this.presentToast('Sent message to selected volunteer(s).');
+                     this.messageTargetList.toggleSelectAll(false);
+                     this.scrollToTop();
+                    }
+                  }
+
       );  
   }
 }
