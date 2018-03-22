@@ -1,7 +1,7 @@
-import { Component, ViewChild } from '@angular/core'
+import { Component, ViewChild, OnInit } from '@angular/core'
 import { UserServices } from '../../lib/service/user';
 import { NavController, PopoverController, ModalController } from 'ionic-angular';
-import { STRINGS } from '../../lib/provider/config';
+import { STRINGS, CONSTRAINTS } from '../../lib/provider/config';
 import { TranslateService } from "@ngx-translate/core";
 import { HomePage } from '../home/home';
 import { RegisterIndividualProfilePage } from '../register-individual-profile/register-individual-profile';
@@ -11,17 +11,24 @@ import { PrivacyTermsModal } from '../../modals/privacy-terms-modal';
 import { Storage } from '@ionic/storage';
 import { ContactMethod } from '../../lib/components/ContactMethod/contactMethod.component';
 import { Content } from 'ionic-angular';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   templateUrl: 'register-login.html'
 })
-export class RegisterLoginPage {
-  public username: string = '';
-  public password1: string = '';
-  public showpassword: string = 'password';
-  public password2: string = '';
-  public email: string = '';
-  public sms: string = '';
+export class RegisterLoginPage implements OnInit {
+
+    public username: string = '';
+    public password1: string = '';
+    public showpassword: string = 'password';
+    public password2: string = '';
+    public email: string = '';
+    public sms: string = '';
+
+    public formGroup: FormGroup;
+
+
+
 
   public usernameerror: boolean = false;
   public password1error: boolean = false;
@@ -57,8 +64,39 @@ export class RegisterLoginPage {
     public userServices: UserServices,
     public translate: TranslateService,
     public popoverCtrl: PopoverController,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public formBuilder: FormBuilder
+
   ){}
+
+    ngOnInit(): void {
+
+      this.formGroup = this.formBuilder.group({
+          username: ['', 
+              Validators.compose([Validators.required, 
+              Validators.minLength(CONSTRAINTS.USER_NAME_MIN),
+              Validators.maxLength(CONSTRAINTS.USER_NAME_MAX),
+              Validators.pattern(new RegExp('^[A-Za-z]')),
+              Validators.pattern(new RegExp('[^\+\-\.@A-Z_a-z0-9]'))
+            ])],
+          password: '',
+          passwordrepeat: '',
+          email: ['', Validators.email],
+          mobile: '',
+          terms: '',
+          remember: ''
+
+
+
+    });
+    
+  }
+
+
+
+
+
+
 
   promiseToScroll() {
     //needed to allow view to refresh with error elements before scroll
@@ -367,6 +405,7 @@ export class RegisterLoginPage {
   }
 
   presentUserPopover(ev) {
+    console.log("call to presentUserPopover()");
     let popover = this.popoverCtrl.create(UseridPopover, {
     });
     popover.present({

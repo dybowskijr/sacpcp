@@ -4,6 +4,8 @@
 .sourcemaps/
 /src/lib/
 node_modules/
+package.json
+package-lock.json
 www/
 dist/
 platforms/
