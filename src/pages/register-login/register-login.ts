@@ -12,6 +12,9 @@ import { Storage } from '@ionic/storage';
 import { ContactMethod } from '../../lib/components/ContactMethod/contactMethod.component';
 import { Content } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { mustMatchValidator } from '../../lib/validators/mustmatchvalidator';
+import { mustNotMatchValidator } from '../../lib/validators/mustnotmatchvalidator';
+import { PasswordPatternValidator } from '../../lib/validators/passwordpatternvalidator';
 
 @Component({
   templateUrl: 'register-login.html'
@@ -69,34 +72,37 @@ export class RegisterLoginPage implements OnInit {
 
   ){}
 
-    ngOnInit(): void {
+  ngOnInit(): void {
 
-      this.formGroup = this.formBuilder.group({
-          username: ['', 
-              Validators.compose([Validators.required, 
-              Validators.minLength(CONSTRAINTS.USER_NAME_MIN),
-              Validators.maxLength(CONSTRAINTS.USER_NAME_MAX),
-              Validators.pattern(new RegExp('^[A-Za-z]')),
-              Validators.pattern(new RegExp('[^\+\-\.@A-Z_a-z0-9]'))
-            ])],
-          password: '',
-          passwordrepeat: '',
-          email: ['', Validators.email],
-          mobile: '',
-          terms: '',
-          remember: ''
+    this.formGroup = this.formBuilder.group(
+      {
+        username: ['',
+          Validators.compose([Validators.required,
+          Validators.minLength(CONSTRAINTS.USER_NAME_MIN),
+          Validators.maxLength(CONSTRAINTS.USER_NAME_MAX),
+          Validators.pattern(new RegExp('^[A-Za-z]')),
+          Validators.pattern(new RegExp('^[\+\-\.@A-Z_a-z0-9]*$'))
+          ])],
+        password: ['', Validators.compose([
+          Validators.required,
+          Validators.minLength(CONSTRAINTS.PASSWORD_MIN),
+          Validators.maxLength(CONSTRAINTS.PASSWORD_MAX),
+          PasswordPatternValidator()])],
+        passwordrepeat: ['', Validators.required],
+        email: ['', Validators.email],
+        mobile: '',
+        terms: '',
+        remember: ''
+      },
+      {
+        validator: [
+          mustMatchValidator('password', 'passwordrepeat', 'Password fields must match'),
+          mustNotMatchValidator('password', 'username', 'Username and password cannot match')
+        ]
+      }
+    );
 
-
-
-    });
-    
   }
-
-
-
-
-
-
 
   promiseToScroll() {
     //needed to allow view to refresh with error elements before scroll

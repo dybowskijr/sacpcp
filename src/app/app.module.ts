@@ -73,7 +73,7 @@ import { GroupAttendeeModal } from '../modals/group-attendee-modal';
 import { MemberPopOver } from '../pages/group-profile/member-popover';
 import { AppVersion } from '@ionic-native/app-version';
 import { AppPreferences } from '@ionic-native/app-preferences';
-import { MessageTargetList} from '../lib/components/message-target-list';
+import { MessageTargetList} from '../lib/components/message-target-list/message-target-list';
 
 
 export const deepLinkConfig: DeepLinkConfig = {
@@ -208,7 +208,8 @@ export function translateFactory(http: HttpClient) {
     EventSignupModal,
     AddAttendeesModal,
     GroupAttendeeModal,
-    MemberPopOver
+    MemberPopOver,
+    MessageTargetList
     
   ],
   providers: [ 

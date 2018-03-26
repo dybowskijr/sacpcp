@@ -4,47 +4,43 @@
 </ion-header>
 
 <ion-content>
-<p *ngIf="usernameerror || password1error || password2error || emailerror || smserror || !terms" 
-  align="center"><span style="color: #CC1F2C; font-weight: bolder">Please Note:</span>
+<ion-list>
+<ion-list-header style="text-align: center" *ngIf="usernameerror || password1error || password2error || emailerror || smserror || !terms">
+    <span style="color: #CC1F2C; font-weight: bolder">Please Note:</span>
            All required fields (<span class="required-field">*</span>) 
-               must be completed to register.</p>
-    <ion-list id="register-login-page" [formGroup]="formGroup">
-            <!--username and usernameerror container-->
-            <div class="absolute-container">
-                <ion-item no-lines *ngIf="nonFieldsError" class="word-wrap: break-word;" text-wrap #usernameErrorElem>
-                    <ion-icon name="alert" style="color: #CC1F2C;" item-start></ion-icon>
-                    <p class="no-text-transform" style="color:#CC1F2C">{{nonFieldsErrorValue}}</p>
-                </ion-item>
-                <ion-item no-lines *ngIf="usernameerror" class="word-wrap: break-word;" text-wrap #usernameErrorElem>
-                    <ion-icon name="alert" style="color: #CC1F2C;" item-start></ion-icon>
-                    <p class="no-text-transform" style="color:#CC1F2C">{{usernameerrorvalue}}</p>
-                </ion-item>
-
-
-                <ion-item no-lines>
-                    <ion-label (click)="presentUserPopover($event)" stacked><span class="required-field">*</span>Username <ion-icon class="popover-icon-clean" name="information-circle"  (click)="presentUserPopover($event)"></ion-icon>
-                        <error-message-span *ngIf="false" [errorText]="'Username Error Placeholder'" [iconType]="'none'">
+               must be completed to register.
+</ion-list-header>
+        <form [formGroup]="formGroup">
+           <ion-item-group>
+                <ion-item>
+                       <span class="required-field">*</span>Username
+                       <ion-icon style="color:#CC1F2C"
+                             (click)="presentUserPopover($event)"                              
+                              name="information-circle"></ion-icon>
+                      
+                        <error-message-span *ngIf="formGroup.controls.username.invalid && formGroup.controls.username.touched"
+                         [errorText]="formGroup.controls.username.errors | val_err_pipe:'username'" [iconType]="'none'">
                         </error-message-span>
-                    </ion-label>
+                </ion-item>
+                <ion-item>
                     <ion-input autocapitalize="off" formControlName="username" type="text"></ion-input>
                 </ion-item>
-            </div>
-
+            </ion-item-group>
 
             <!--password and password error container-->
-            <div class="absolute-container">
-                <ion-item no-lines *ngIf="password1error" class="word-wrap: break-word;" text-wrap #password1ErrorElem>
-                    <ion-icon name="alert" style="color: #CC1F2C;" item-start></ion-icon>
-                    <p class="no-text-transform" style="color:#CC1F2C">{{password1errorvalue}}</p>
+            <ion-item-group>
+                <ion-item>
+                        {{ 'Password' | translate }} 
+                    <a id="show-link" (click)="showPassword()">{{(showpassword==='password') ? 'show' : 'side'}}</a>
+                    <ion-icon name="information-circle" (click)="presentPasswordPopover()"></ion-icon>
+                    <error-message-span *ngIf="formGroup.controls.password.invalid && formGroup.controls.password.touched"
+                         [errorText]="formGroup.controls.password.errors | val_err_pipe:'password'" [iconType]="'none'">
+                        </error-message-span>
                 </ion-item>
-
-                <a id="show-link" (click)="showPassword()">{{(showpassword==='password') ? 'Show' : 'Hide'}}</a>
-                <ion-icon class="popover-icon" name="information-circle" (click)="presentPasswordPopover($event)"></ion-icon>
-                <ion-item no-lines [class.error]="password1error">
-                    <ion-label stacked><span class="required-field">*</span>{{ 'Password' | translate}} </ion-label>
-                    <ion-input autocapitalize="off" (ionBlur)="checkPassword1()" formControlName="password" [type]="showpassword" placeholder="" (ngModelChange)="checkRequired()"></ion-input>
+                <ion-item no-lines>
+                    <ion-input autocapitalize="off" (ionBlur)="checkPassword1()" formControlName="password" [type]="showpassword"></ion-input>
                 </ion-item>
-            </div>
+            </ion-item-group>
             <!--password2 fields-->
             <ion-item no-lines *ngIf="password2error" class="word-wrap: break-word;" text-wrap #password2ErrorElem>
                 <ion-icon name="alert" style="color: #CC1F2C;" item-start></ion-icon>
@@ -104,5 +100,6 @@
             </ion-row>
 
             <div style="min-height: 10vh !important;"></div>
+        </form>
     </ion-list>
 </ion-content>
