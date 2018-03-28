@@ -74,6 +74,7 @@ import { MemberPopOver } from '../pages/group-profile/member-popover';
 import { AppVersion } from '@ionic-native/app-version';
 import { AppPreferences } from '@ionic-native/app-preferences';
 import { MessageTargetList } from '../lib/components/message-target-list/message-target-list';
+import { ContactMethodReactive } from '../lib/components/contact-method-reactive/contact-method-reactive';
 
 export const deepLinkConfig: DeepLinkConfig = {
   links: [
@@ -126,6 +127,7 @@ export function translateFactory(http: HttpClient) {
     EventDetailModal,
     EventDetailPopup,
     ContactMethod,
+    ContactMethodReactive,
     PhoneInput,
     Admin,
     CreateEvent,

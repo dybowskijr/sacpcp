@@ -5,13 +5,12 @@
 
 <ion-content>
 <ion-list>
-<ion-list-header style="text-align: center" *ngIf="usernameerror || password1error || password2error || emailerror || smserror || !terms">
+<ion-list-header style="text-align: center">
     <span style="color: #CC1F2C; font-weight: bolder">Please Note:</span>
            All required fields (<span class="required-field">*</span>) 
                must be completed to register.
 </ion-list-header>
         <form [formGroup]="formGroup">
-           <ion-item-group>
                 <ion-item>
                        <span class="required-field">*</span>Username
                        <ion-icon style="color:#CC1F2C"
@@ -25,48 +24,43 @@
                 <ion-item>
                     <ion-input autocapitalize="off" formControlName="username" type="text"></ion-input>
                 </ion-item>
-            </ion-item-group>
-
-            <!--password and password error container-->
-            <ion-item-group>
                 <ion-item>
-                        {{ 'Password' | translate }} 
+                        {{ 'Password' }} 
                     <a id="show-link" (click)="showPassword()">{{(showpassword==='password') ? 'show' : 'side'}}</a>
-                    <ion-icon name="information-circle" (click)="presentPasswordPopover()"></ion-icon>
+                    <ion-icon color="red" name="information-circle" (click)="presentPasswordPopover()"></ion-icon>
                     <error-message-span *ngIf="formGroup.controls.password.invalid && formGroup.controls.password.touched"
                          [errorText]="formGroup.controls.password.errors | val_err_pipe:'password'" [iconType]="'none'">
                         </error-message-span>
                 </ion-item>
-                <ion-item no-lines>
-                    <ion-input autocapitalize="off" (ionBlur)="checkPassword1()" formControlName="password" [type]="showpassword"></ion-input>
+                <ion-item>
+                    <ion-input autocapitalize="off" formControlName="password" [type]="showpassword"></ion-input>
                 </ion-item>
-            </ion-item-group>
+
             <!--password2 fields-->
-            <ion-item no-lines *ngIf="password2error" class="word-wrap: break-word;" text-wrap #password2ErrorElem>
-                <ion-icon name="alert" style="color: #CC1F2C;" item-start></ion-icon>
-                <p class="no-text-transform" style="color:#CC1F2C">{{password2errorvalue}}</p>
-            </ion-item>
             <ion-item no-lines class="">
-                <!--<ion-icon *ngIf="password2error" name="alert" item-start isActive="false" [class.error]="password2error"></ion-icon>-->
-                <ion-label stacked><span class="required-field">*</span>Confirm Password</ion-label>
+                <ion-label stacked><span class="required-field">*</span>Confirm Password
+                    <error-message-span *ngIf="formGroup.controls.password.invalid && formGroup.controls.password.touched"
+                    [errorText]="formGroup.controls.password.errors | val_err_pipe:'password'" [iconType]="'none'">
+                   </error-message-span></ion-label>
                 <ion-input autocapitalize="off" type="password" formControlName="passwordrepeat" ngDefaultControl></ion-input>
             </ion-item>
+            
             <!--save login radio-->
             <ion-item no-lines>
-                <ion-label>{{ 'Save My Login' | translate}}</ion-label>
+                <ion-label>{{ 'Save My Login'}}</ion-label>
                 <ion-checkbox dark formControlName="remember" ngDefaultControl></ion-checkbox>
             </ion-item>
 
             <!--preferred contact method  and errors section-->
-            <ion-item no-lines *ngIf="emailerror" class="word-wrap: break-word;" text-wrap #emailErrorElem>
+            <ion-item no-lines *ngIf="emailerror" class="word-wrap: break-word;" text-wrap>
                 <ion-icon name="alert" style="color: #CC1F2C;" item-start></ion-icon>
                 <p class="no-text-transform" style="color:#CC1F2C">{{emailerrorvalue}}</p>
             </ion-item>
-            <ion-item no-lines *ngIf="smserror" class="word-wrap: break-word;" text-wrap #smsErrorElem>
+            <ion-item no-lines *ngIf="smserror" class="word-wrap: break-word;" text-wrap>
                 <ion-icon name="alert" style="color: #CC1F2C;" item-start></ion-icon>
                 <p class="no-text-transform" style="color:#CC1F2C">{{smserrorvalue}}</p>
             </ion-item>
-            <contactMethod name="ep" [email]="pcmethod" (methodUpdated)="checkRequired(); clearContactErrors();" (contactMethodBlur)="checkContactMethod()" (emailUpdated)="checkRequired()" (mobileUpdated)="checkRequired()"></contactMethod>
+            <contactMethod name="ep" [email]="pcmethod" (methodUpdated)="checkRequired(); clearContactErrors();" (contactMethodBlur)="checkContactMethod()"></contactMethod>
             <!--terms of service agreement-->
             <ion-item no-lines *ngIf="!terms" class="word-wrap: break-word;" text-wrap #termsErrorElem>
                 <ion-icon name="alert" style="color: #CC1F2C;" item-start></ion-icon>
