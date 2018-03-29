@@ -51,16 +51,10 @@
                 <ion-checkbox dark formControlName="remember" ngDefaultControl></ion-checkbox>
             </ion-item>
 
-            <!--preferred contact method  and errors section-->
-            <ion-item no-lines *ngIf="emailerror" class="word-wrap: break-word;" text-wrap>
-                <ion-icon name="alert" style="color: #CC1F2C;" item-start></ion-icon>
-                <p class="no-text-transform" style="color:#CC1F2C">{{emailerrorvalue}}</p>
-            </ion-item>
-            <ion-item no-lines *ngIf="smserror" class="word-wrap: break-word;" text-wrap>
-                <ion-icon name="alert" style="color: #CC1F2C;" item-start></ion-icon>
-                <p class="no-text-transform" style="color:#CC1F2C">{{smserrorvalue}}</p>
-            </ion-item>
-            <contactMethod name="ep" [email]="pcmethod" (methodUpdated)="checkRequired(); clearContactErrors();" (contactMethodBlur)="checkContactMethod()"></contactMethod>
+            <!--preferred contact method-->
+            <contact-method-reactive></contact-method-reactive>
+
+            <!-- contactMethod name="ep" [email]="pcmethod" (methodUpdated)="checkRequired(); clearContactErrors();" (contactMethodBlur)="checkContactMethod()"></contactMethod -->
             <!--terms of service agreement-->
             <ion-item no-lines *ngIf="!terms" class="word-wrap: break-word;" text-wrap #termsErrorElem>
                 <ion-icon name="alert" style="color: #CC1F2C;" item-start></ion-icon>
