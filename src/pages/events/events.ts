@@ -464,17 +464,10 @@ export class EventPage {
 
     signupEventRegistration(eventData) {
 
-        let admin = false;
+        let admin = this.amIGroupAdmin(eventData.id);
         let eventType = eventData.eventexpanded.org_restriction;
         let eventId = eventData.id;
 
-        for (let i in this.myPreferences.organizations) {
-            if (this.myPreferences.organizations[i].role == 1 || this.myPreferences.organizations[i].role == 2) {
-                admin = true;
-            } else {
-                admin = false
-            }
-        }
         if (eventType == 1) {
 
             //TODO: Event only Logic
